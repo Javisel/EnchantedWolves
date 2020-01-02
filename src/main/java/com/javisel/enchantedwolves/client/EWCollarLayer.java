@@ -2,8 +2,10 @@ package com.javisel.enchantedwolves.client;
 
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.platform.GLX;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.WolfModel;
@@ -24,23 +26,87 @@ public class EWCollarLayer extends LayerRenderer<WolfEntity, WolfModel<WolfEntit
     }
 
     @Override
-    public void func_225628_a_(MatrixStack p_225628_1_, IRenderTypeBuffer p_225628_2_, int p_225628_3_, WolfEntity pupper, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
-
-        if (pupper.isTamed() && !pupper.isInvisible()) {
-
-            if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar) {
-                WolfCollar collar = (WolfCollar) pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem();
-
-                func_229141_a_(this.getEntityModel(), collar.collarLocation(), p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
-                if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).hasEffect()) {
+    public void render(WolfEntity wolfEntity, float p_212842_2_, float p_212842_3_, float p_212842_4_, float p_212842_5_, float p_212842_6_, float p_212842_7_, float p_212842_8_) {
 
 
-                    func_229141_a_(this.getEntityModel(), ENCHANTED, p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
+        if (wolfEntity.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar) {
 
+            WolfCollar wolfCollar = (WolfCollar) wolfEntity.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem();
+            this.bindTexture(wolfCollar.collarLocation());
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            if (wolfEntity.isInvisible()) {
+                GlStateManager.depthMask(false);
+            } else {
+                GlStateManager.depthMask(true);
+            }
+
+            int i = 61680;
+            int j = i % 65536;
+            int k = i / 65536;
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float) j, (float) k);
+          //  GlStateManager.color4f(1, 1, 1, 1.0F);
+            GameRenderer gamerenderer = Minecraft.getInstance().gameRenderer;
+            gamerenderer.setupFogColor(true);
+            this.getEntityModel().render(wolfEntity, p_212842_2_, p_212842_3_, p_212842_5_, p_212842_6_, p_212842_7_, p_212842_8_);
+
+            gamerenderer.setupFogColor(false);
+            i = wolfEntity.getBrightnessForRender();
+            j = i % 65536;
+            k = i / 65536;
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float) j, (float) k);
+            this.func_215334_a(wolfEntity);
+            GlStateManager.depthMask(true);
+            GlStateManager.disableBlend();
+
+            ///ENCHANT
+
+            if (wolfEntity.getItemStackFromSlot(EquipmentSlotType.HEAD).hasEffect()) {
+                this.bindTexture(ENCHANTED);
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+                if (wolfEntity.isInvisible()) {
+                    GlStateManager.depthMask(false);
+                } else {
+                    GlStateManager.depthMask(true);
                 }
 
 
+                GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float) j, (float) k);
+             //   GlStateManager.color4f(1, 1, 1, 1.0F);
+
+                gamerenderer.setupFogColor(true);
+                this.getEntityModel().render(wolfEntity, p_212842_2_, p_212842_3_, p_212842_5_, p_212842_6_, p_212842_7_, p_212842_8_);
+
+                gamerenderer.setupFogColor(false);
+                i = wolfEntity.getBrightnessForRender();
+                j = i % 65536;
+                k = i / 65536;
+                GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float) j, (float) k);
+                this.func_215334_a(wolfEntity);
+                GlStateManager.depthMask(true);
+                GlStateManager.disableBlend();
+
+
             }
+
+
+
         }
     }
+
+
+
+
+
+
+
+
+
+    @Override
+    public boolean shouldCombineTextures() {
+        return false;
+    }
+
+
 }

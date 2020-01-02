@@ -1,6 +1,8 @@
 package com.javisel.enchantedwolves;
 
+import com.javisel.enchantedwolves.client.ClientEvents;
 import com.javisel.enchantedwolves.client.EWCollarLayer;
+import com.javisel.enchantedwolves.client.WolfRender;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -9,6 +11,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -19,6 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -42,7 +46,7 @@ public class EnchantedWolves {
     public static final String THUNDERMAW = "THUNDERMAW";
     public static final String MODID = "enchantedwolves";
     // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static EnchantedWolvesItemGroup enchantedWolvesItemGroup = new EnchantedWolvesItemGroup();
     public static EnchantmentType COLLAR = EnchantmentType.create("collar", (item) -> (item instanceof WolfCollar));
 
@@ -61,6 +65,7 @@ public class EnchantedWolves {
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+            MinecraftForge.EVENT_BUS.register(new ClientEvents());
         });
 
 
@@ -105,9 +110,7 @@ public class EnchantedWolves {
                 CompoundNBT compoundnbt = listnbt.getCompound(i);
                 ResourceLocation resourcelocation1 = ResourceLocation.tryCreate(compoundnbt.getString("id"));
                 if (resourcelocation1 != null && resourcelocation1.equals(resourcelocation)) {
-                    System.out.println("Found!");
                     newlevel = compoundnbt.getInt("lvl") - decrement;
-                    System.out.println("The new level is: " + newlevel);
                     if (newlevel >= 1) {
                         compoundnbt.putInt("lvl", newlevel);
                         System.out.println("The enchant can stay!");
@@ -134,11 +137,13 @@ public class EnchantedWolves {
 
     }
 
+
+
+
+
     private void doClientStuff(final FMLClientSetupEvent event) {
 
-        EntityRendererManager entityRendererManager = Minecraft.getInstance().getRenderManager();
-        WolfRenderer wolfRenderer = (WolfRenderer) entityRendererManager.renderers.get(EntityType.WOLF);
-        wolfRenderer.addLayer((new EWCollarLayer(wolfRenderer)));
+        RenderingRegistry.registerEntityRenderingHandler(WolfEntity.class, new WolfRender.RenderFactory());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

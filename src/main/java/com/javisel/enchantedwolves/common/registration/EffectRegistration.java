@@ -19,7 +19,7 @@ public class EffectRegistration {
 
         event.getRegistry().registerAll(
 
-                DISARMED = new Disarmed()
+              DISARMED = new Disarmed()
         );
 
 

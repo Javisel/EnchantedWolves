@@ -1,7 +1,11 @@
 package com.javisel.enchantedwolves;
 
+import com.javisel.enchantedwolves.client.EWCollarLayer;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
 import com.javisel.enchantedwolves.common.registration.EnchantmentRegistration;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,17 +19,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistry;
+import org.apache.logging.log4j.Level;
 
 import static com.javisel.enchantedwolves.EnchantedWolves.decreaseEnchantmentLevel;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public class EventHandler {
+
 
 
     @SubscribeEvent
@@ -123,7 +133,7 @@ public class EventHandler {
                 PlayerEntity owner = (PlayerEntity) e.getSource().getTrueSource();
 
                 if (pupper.getOwner() == owner) {
-                    if (owner.isCrouching() && owner.getHeldItemMainhand().isEmpty()) {
+                    if (owner.isSneaking() && owner.getHeldItemMainhand().isEmpty()) {
 
                         owner.setHeldItem(Hand.MAIN_HAND, pupper.getItemStackFromSlot(EquipmentSlotType.HEAD));
                         pupper.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
