@@ -5,6 +5,7 @@ import com.javisel.enchantedwolves.Config;
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.registration.EnchantmentRegistration;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,21 +13,22 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.TieredItem;
+import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.system.CallbackI;
+
+import java.util.Iterator;
 
 import static com.javisel.enchantedwolves.EnchantedWolves.*;
 
-public class WolfCollar extends TieredItem {
+public class WolfCollar extends ArmorItem {
 
 
     private String name;
 
-    public WolfCollar(String name, ItemTier tier) {
-        super(tier, new Properties().group(enchantedWolvesItemGroup));
+    public WolfCollar(String name,ArmorMaterial material) {
+        super(material,EquipmentSlotType.HEAD, new Properties().group(enchantedWolvesItemGroup));
         setRegistryName(EnchantedWolves.MODID, name);
         this.name = name;
 
@@ -42,31 +44,46 @@ public class WolfCollar extends TieredItem {
         return true;
     }
 
+    /**
+     * Determines if the specific ItemStack can be placed in the specified armor
+     * slot, for the entity.
+     *
+     * @param stack     The ItemStack
+     * @param armorType Armor slot to be verified.
+     * @param entity    The entity trying to equip the armor
+     * @return True if the given ItemStack can be inserted in the slot
+     */
+    @Override
+    public boolean canEquip(ItemStack stack, EquipmentSlotType armorType, Entity entity) {
+        return entity instanceof WolfEntity;
+    }
 
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
 
 
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(EquipmentSlotType.HEAD);
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(EquipmentSlotType.HEAD,stack);
+
+
 
         if (slot == EquipmentSlotType.HEAD) {
 
             if (stack.isEnchanted()) {
 
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TRAUMA, stack) > 0) {
-                    multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TRAUMA, stack) * .5, AttributeModifier.Operation.ADDITION));
+                    multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TRAUMA, stack) * .5, AttributeModifier.Operation.ADDITION).setSaved(true));
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.SWIFTNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(EnchantedWolves.MOVEMENT_SPEED_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.SWIFTNESS, stack) * .1, AttributeModifier.Operation.MULTIPLY_BASE));
+                    multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(EnchantedWolves.MOVEMENT_SPEED_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.SWIFTNESS, stack) * .1, AttributeModifier.Operation.MULTIPLY_BASE).setSaved(true));
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(MAX_HEALTH_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE));
+                    multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(MAX_HEALTH_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE).setSaved(true));
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE));
+                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * 2, AttributeModifier.Operation.ADDITION).setSaved(true));
 
                 }
 
@@ -90,17 +107,14 @@ public class WolfCollar extends TieredItem {
 
                     if (stack.hasDisplayName()) {
 
-                        entity.recalculateSize();
                         pupper.setCustomName(stack.getDisplayName());
                     }
-                    float healthratio = pupper.getHealth() / pupper.getMaxHealth();
 
                     pupper.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
                     if (!player.isCreative()) {
                         player.setHeldItem(hand, ItemStack.EMPTY);
                     }
 
-                    pupper.setHealth(pupper.getMaxHealth() * healthratio);
 
 
                 }

@@ -1,2 +1,2 @@
 # EnchantedWolves
- A minecraft mod taht adds enchanted wolf collars
+ A minecraft mod that adds enchanted wolf collars

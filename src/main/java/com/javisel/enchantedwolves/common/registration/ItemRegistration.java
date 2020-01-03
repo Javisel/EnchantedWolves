@@ -3,6 +3,7 @@ package com.javisel.enchantedwolves.common.registration;
 
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
 import net.minecraftforge.event.RegistryEvent;
@@ -23,10 +24,10 @@ public class ItemRegistration {
     public static void registerItem(final RegistryEvent.Register<Item> event) {
 
         event.getRegistry().registerAll(
-                leather_collar = new WolfCollar("leather_collar", ItemTier.WOOD),
-                chain_collar = new WolfCollar("chain_collar", ItemTier.IRON),
-                golden_collar = new WolfCollar("golden_collar", ItemTier.GOLD),
-                diamond_collar = new WolfCollar("diamond_collar", ItemTier.DIAMOND)
+                leather_collar = new WolfCollar("leather_collar", ArmorMaterial.LEATHER),
+                chain_collar = new WolfCollar("chain_collar", ArmorMaterial.CHAIN),
+                golden_collar = new WolfCollar("golden_collar",ArmorMaterial.GOLD),
+                diamond_collar = new WolfCollar("diamond_collar",ArmorMaterial.DIAMOND)
         );
 
 

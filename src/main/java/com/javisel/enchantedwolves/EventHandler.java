@@ -1,10 +1,13 @@
 package com.javisel.enchantedwolves;
 
+import com.javisel.enchantedwolves.common.capabilities.IWolfCapabilities;
+import com.javisel.enchantedwolves.common.capabilities.WolfCapabilityProvider;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
 import com.javisel.enchantedwolves.common.registration.EnchantmentRegistration;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -15,9 +18,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -26,6 +32,26 @@ import static com.javisel.enchantedwolves.EnchantedWolves.decreaseEnchantmentLev
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public class EventHandler {
+
+
+
+
+    @SubscribeEvent
+    public void rightclickFix(PlayerInteractEvent.EntityInteractSpecific e) {
+
+        if (e.getEntity().getType()==EntityType.WOLF) {
+            WolfEntity pupper = (WolfEntity) e.getEntityLiving();
+
+
+
+            if (pupper.getHealth()>pupper.getMaxHealth()) {
+                pupper.setHealth(pupper.getMaxHealth());
+            }
+
+        }
+
+    }
+
 
 
     @SubscribeEvent
@@ -43,7 +69,7 @@ public class EventHandler {
                     });
                     e.setCanceled(true);
 
-                    e.getEntityLiving().heal((float) (e.getEntityLiving().getMaxHealth()));
+                    e.getEntityLiving().heal( (e.getEntityLiving().getMaxHealth()));
 
                     if (e.getEntityLiving().getType() == EntityType.WOLF) {
                         WolfEntity pupper = (WolfEntity) e.getEntityLiving();
@@ -73,9 +99,11 @@ public class EventHandler {
     @SubscribeEvent
     public void doggyDamage(LivingDamageEvent e) {
 
+
         if (e.getEntityLiving().getType() == EntityType.WOLF) {
 
             WolfEntity pupper = (WolfEntity) e.getEntityLiving();
+
 
             if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar) {
                 ItemStack collar = pupper.getItemStackFromSlot(EquipmentSlotType.HEAD);
@@ -111,22 +139,48 @@ public class EventHandler {
     }
 
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void leftClickCollarOff(LivingAttackEvent e) {
 
+
+            if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
+                e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
+            }
+
         if (e.getEntityLiving().getType() == EntityType.WOLF && !e.getEntityLiving().getEntityWorld().isRemote) {
+
+
             WolfEntity pupper = (WolfEntity) e.getEntityLiving();
+
+
+            if (e.getSource().getTrueSource() instanceof PlayerEntity) {
+
+                PlayerEntity playerEntity = (PlayerEntity) e.getSource().getTrueSource();
+
+                playerEntity.sendMessage(new StringTextComponent("Health: " + pupper.getHealth() + "/" + pupper.getMaxHealth()));
+                playerEntity.sendMessage(new StringTextComponent("Armor: " + pupper.getAttribute(SharedMonsterAttributes.ARMOR).getValue()));
+                playerEntity.sendMessage(new StringTextComponent("Attack Damage: " + pupper.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue()));
+                playerEntity.sendMessage(new StringTextComponent("Move Speed: " + pupper.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue()));
+
+
+
+                if (pupper.getHealth()>pupper.getMaxHealth()) {
+                    pupper.setHealth(pupper.getMaxHealth());
+                }
+            }
 
             if (pupper.isTamed() && pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar && e.getSource().getTrueSource() instanceof PlayerEntity) {
 
                 e.setCanceled(true);
                 PlayerEntity owner = (PlayerEntity) e.getSource().getTrueSource();
 
+
                 if (pupper.getOwner() == owner) {
                     if (owner.isCrouching() && owner.getHeldItemMainhand().isEmpty()) {
-
                         owner.setHeldItem(Hand.MAIN_HAND, pupper.getItemStackFromSlot(EquipmentSlotType.HEAD));
                         pupper.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
+                    }
+                    if (pupper.getHealth()>pupper.getMaxHealth()) {
 
                     }
 
@@ -140,7 +194,40 @@ public class EventHandler {
 
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void leftclickHealthFix(LivingAttackEvent e) {
 
+        if (e.getEntity() instanceof LivingEntity && e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
+
+            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
+
+
+        }
+
+
+
+    }
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void livingEquipment(LivingEquipmentChangeEvent e) {
+
+
+        if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
+            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
+        }
+
+
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void livingEquip(LivingEquipmentChangeEvent e) {
+
+
+        if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
+            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
+        }
+
+
+    }
     @SubscribeEvent
     public void magicCollars(LivingDamageEvent e) {
 

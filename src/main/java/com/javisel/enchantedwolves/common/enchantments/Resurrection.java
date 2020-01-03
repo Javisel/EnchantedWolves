@@ -16,18 +16,8 @@ public class Resurrection extends EnchantmentBase {
         return true;
     }
 
-    public int getMinEnchantability(int p_77321_1_) {
-        return p_77321_1_ * 25;
-    }
 
-    public int getMaxEnchantability(int p_223551_1_) {
-        return this.getMinEnchantability(p_223551_1_) + 50;
-    }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack p_canApplyAtEnchantingTable_1_) {
-        return false;
-    }
 
     @Override
     public boolean isAllowedOnBooks() {

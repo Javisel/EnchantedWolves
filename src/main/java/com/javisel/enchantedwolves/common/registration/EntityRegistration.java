@@ -20,7 +20,7 @@ public class EntityRegistration {
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
         event.getRegistry().registerAll
                 (
-                        //  NEW_WOLF
+                         //NEW_WOLF
                 );
 
 

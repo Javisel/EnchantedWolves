@@ -1,6 +1,9 @@
 package com.javisel.enchantedwolves;
 
 import com.javisel.enchantedwolves.client.EWCollarLayer;
+import com.javisel.enchantedwolves.common.capabilities.IWolfCapabilities;
+import com.javisel.enchantedwolves.common.capabilities.WolfCapabilities;
+import com.javisel.enchantedwolves.common.capabilities.WolfCapabilityStorage;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -15,7 +18,9 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -105,14 +110,10 @@ public class EnchantedWolves {
                 CompoundNBT compoundnbt = listnbt.getCompound(i);
                 ResourceLocation resourcelocation1 = ResourceLocation.tryCreate(compoundnbt.getString("id"));
                 if (resourcelocation1 != null && resourcelocation1.equals(resourcelocation)) {
-                    System.out.println("Found!");
                     newlevel = compoundnbt.getInt("lvl") - decrement;
-                    System.out.println("The new level is: " + newlevel);
                     if (newlevel >= 1) {
                         compoundnbt.putInt("lvl", newlevel);
-                        System.out.println("The enchant can stay!");
                     } else {
-                        System.out.println("The Enchant is slated for removal!");
 
                         remove = true;
                     }
@@ -130,10 +131,13 @@ public class EnchantedWolves {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // some preinit code
+        CapabilityManager.INSTANCE.register(IWolfCapabilities.class, new WolfCapabilityStorage(), WolfCapabilities::new);
+
+
 
     }
 
+        @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
 
         EntityRendererManager entityRendererManager = Minecraft.getInstance().getRenderManager();
