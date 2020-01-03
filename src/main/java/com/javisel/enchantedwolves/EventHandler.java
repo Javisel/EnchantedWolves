@@ -12,6 +12,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -19,12 +21,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -35,6 +39,10 @@ import static com.javisel.enchantedwolves.EnchantedWolves.decreaseEnchantmentLev
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public class EventHandler {
+
+
+
+
 
 
 
@@ -108,7 +116,7 @@ public class EventHandler {
 
                 }
                 float total = e.getAmount() - reduction;
-                if (total < 0) total = 0;
+                if (total < 0) {total = 0;}
                 e.setAmount(total);
 
 
@@ -129,7 +137,7 @@ public class EventHandler {
 
             if (pupper.isTamed() && pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar && e.getSource().getTrueSource() instanceof PlayerEntity) {
 
-                e.setCanceled(true);
+               e.setCanceled(true);
                 PlayerEntity owner = (PlayerEntity) e.getSource().getTrueSource();
 
                 if (pupper.getOwner() == owner) {

@@ -62,11 +62,11 @@ public class WolfCollar extends TieredItem {
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(MAX_HEALTH_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE));
+                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * 4, AttributeModifier.Operation.ADDITION));
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE));
+                    multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_TOUGHNESS_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * 2, AttributeModifier.Operation.ADDITION));
 
                 }
 
@@ -86,21 +86,19 @@ public class WolfCollar extends TieredItem {
 
             if (pupper.isTamed() && pupper.getOwner() == player) {
 
-                if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+                if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty() || player.isCreative()) {
 
                     if (stack.hasDisplayName()) {
 
-                        entity.recalculateSize();
                         pupper.setCustomName(stack.getDisplayName());
                     }
-                    float healthratio = pupper.getHealth() / pupper.getMaxHealth();
 
                     pupper.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
                     if (!player.isCreative()) {
                         player.setHeldItem(hand, ItemStack.EMPTY);
                     }
 
-                    pupper.setHealth(pupper.getMaxHealth() * healthratio);
+
 
 
                 }
