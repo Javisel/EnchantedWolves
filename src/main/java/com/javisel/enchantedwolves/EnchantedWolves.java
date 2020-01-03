@@ -44,7 +44,8 @@ public class EnchantedWolves {
     public static final UUID MAX_HEALTH_MODDIFIER = UUID.fromString("c46e576c-675e-4c02-a7f3-41f4b51681d2");
     public static final UUID MOVEMENT_SPEED_MODDIFIER = UUID.fromString("09432089-1a0d-49d2-be39-39a552153dd5");
     public static final UUID ARMOR_MODIFIER = UUID.fromString("cd2836f6-ec49-49be-96fe-a043fab5be84");
-    public static final String THUNDERMAW = "THUNDERMAW";
+    public static final UUID ARMOR_TOUGHNESS_MODIFIER = UUID.fromString("339acf3d-7d17-42d5-9aa8-972e09fe6590");
+
     public static final String MODID = "enchantedwolves";
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();

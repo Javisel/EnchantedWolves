@@ -36,21 +36,7 @@ public class EventHandler {
 
 
 
-    @SubscribeEvent
-    public void rightclickFix(PlayerInteractEvent.EntityInteractSpecific e) {
 
-        if (e.getEntity().getType()==EntityType.WOLF) {
-            WolfEntity pupper = (WolfEntity) e.getEntityLiving();
-
-
-
-            if (pupper.getHealth()>pupper.getMaxHealth()) {
-                pupper.setHealth(pupper.getMaxHealth());
-            }
-
-        }
-
-    }
 
 
 
@@ -180,9 +166,7 @@ public class EventHandler {
                         owner.setHeldItem(Hand.MAIN_HAND, pupper.getItemStackFromSlot(EquipmentSlotType.HEAD));
                         pupper.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
                     }
-                    if (pupper.getHealth()>pupper.getMaxHealth()) {
 
-                    }
 
                 }
 
@@ -194,40 +178,8 @@ public class EventHandler {
 
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void leftclickHealthFix(LivingAttackEvent e) {
-
-        if (e.getEntity() instanceof LivingEntity && e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
-
-            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
 
 
-        }
-
-
-
-    }
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void livingEquipment(LivingEquipmentChangeEvent e) {
-
-
-        if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
-            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
-        }
-
-
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void livingEquip(LivingEquipmentChangeEvent e) {
-
-
-        if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
-            e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
-        }
-
-
-    }
     @SubscribeEvent
     public void magicCollars(LivingDamageEvent e) {
 

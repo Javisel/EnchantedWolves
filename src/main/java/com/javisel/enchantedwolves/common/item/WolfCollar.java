@@ -79,11 +79,11 @@ public class WolfCollar extends ArmorItem {
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.MAX_HEALTH.getName(), new AttributeModifier(MAX_HEALTH_MODDIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * .20, AttributeModifier.Operation.MULTIPLY_BASE).setSaved(true));
+                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.BUFFNESS, stack) * 4, AttributeModifier.Operation.ADDITION).setSaved(true));
                 }
                 if (EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) > 0) {
 
-                    multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * 2, AttributeModifier.Operation.ADDITION).setSaved(true));
+                    multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_TOUGHNESS_MODIFIER, "Collar modifier", EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistration.TOUGHNESS, stack) * 2, AttributeModifier.Operation.ADDITION).setSaved(true));
 
                 }
 
