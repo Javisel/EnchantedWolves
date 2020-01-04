@@ -1,0 +1,31 @@
+
+  item.enchantedwolves.leather_collar=Leather Collar
+  item.enchantedwolves.chain_collar=Chain Collar
+  item.enchantedwolves.golden_collar=Golden Collar
+  item.enchantedwolves.diamond_collar=Diamond Collar
+  item.enchantedwolves.marker_arrow=Marker Arrow
+  enchantment.enchantedwolves.trauma=Trauma
+  enchantment.enchantedwolves.leech_fangs=Leech Fangs
+  enchantment.enchantedwolves.hellhound=Hellhound
+  enchantment.enchantedwolves.swiftness=Swiftness
+  enchantment.enchantedwolves.buffness=Buffness
+  enchantment.enchantedwolves.toughness=Toughness
+  enchantment.enchantedwolves.disarm=Disarm
+  enchantment.enchantedwolves.frostbite=Frostbite
+  enchantment.enchantedwolves.cushion=Cushion
+  enchantment.enchantedwolves.ice_paws=Icy Paws
+  enchantment.enchantedwolves.resurrection=Resurrection
+
+  enchantment.enchantedwolves.cushion.disc=Reduces fall damage
+  enchantment.enchantedwolves.trauma.disc=Increases attack damage
+  enchantment.enchantedwolves.leech_fangs.disc=Heal for a percentage of the damage dealt by basic attacks.
+  enchantment.enchantedwolves.hellhound.disc=Attacks set entities on fire. Also reduces fire damage taken.
+  enchantment.enchantedwolves.Buffness.disc=Increases armor.
+  enchantment.enchantedwolves.toughness.disc=Increases armor toughness.
+  enchantment.enchantedwolves.disarm.disc=Attacks have a percentage chance to Disarm the target. Preventing them from using items or attacking for a short duration.
+  enchantment.enchantedwolves.frostbite.disc=Attacks slow entities hit.
+  enchantment.enchantedwolves.swiftness.disc=Increases movement speed.
+  enchantment.enchantedwolves.resurrection.disc=On taking fatal damage reduces this enchantment's level by 1  to heal to full and teleports the wolf to the owner.
+
+  effect.enchantedwolves.disarmed=Disarmed
+  itemGroup.enchantedwolves=Enchanted Wolves

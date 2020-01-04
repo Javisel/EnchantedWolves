@@ -2,45 +2,54 @@ package com.javisel.enchantedwolves.client;
 
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.WolfModel;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.entity.passive.EntityWolf;
 
-@OnlyIn(Dist.CLIENT)
-public class EWCollarLayer extends LayerRenderer<WolfEntity, WolfModel<WolfEntity>> {
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.ResourceLocation;
+
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class EWCollarLayer implements LayerRenderer<EntityWolf> {
 
     private ResourceLocation ENCHANTED = new ResourceLocation(EnchantedWolves.MODID, "textures/entity/collar/enchanted_collar.png");
 
+    private final RenderLiving renderer;
 
-    public EWCollarLayer(IEntityRenderer<WolfEntity, WolfModel<WolfEntity>> p_i50926_1_) {
-        super(p_i50926_1_);
+
+    public EWCollarLayer( RenderLiving renderer) {
+        this.renderer = renderer;
     }
 
-    @Override
-    public void func_225628_a_(MatrixStack p_225628_1_, IRenderTypeBuffer p_225628_2_, int p_225628_3_, WolfEntity pupper, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
 
+    @Override
+    public void doRenderLayer(EntityWolf pupper, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         if (pupper.isTamed() && !pupper.isInvisible()) {
 
-            if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar) {
-                WolfCollar collar = (WolfCollar) pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem();
+            if (pupper.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() instanceof WolfCollar) {
+                WolfCollar collar = (WolfCollar) pupper.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem();
 
-                func_229141_a_(this.getEntityModel(), collar.collarLocation(), p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
-                if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).hasEffect()) {
+                renderer.bindTexture(collar.collarLocation());
+                renderer.getMainModel().render(pupper,limbSwing,limbSwingAmount,partialTicks,netHeadYaw,headPitch,scale);
+
+                if (pupper.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isItemEnchanted()) {
 
 
-                    func_229141_a_(this.getEntityModel(), ENCHANTED, p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
+                    renderer.bindTexture(ENCHANTED);
+                    renderer.getMainModel().render(pupper,limbSwing,limbSwingAmount,partialTicks,netHeadYaw,headPitch,scale);
 
                 }
 
 
             }
         }
+    }
+
+    @Override
+    public boolean shouldCombineTextures() {
+        return false;
     }
 }

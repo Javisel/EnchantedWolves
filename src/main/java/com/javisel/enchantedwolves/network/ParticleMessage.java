@@ -1,10 +1,10 @@
 package com.javisel.enchantedwolves.network;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class ParticleMessage {
 
-    public static CompoundNBT nbt;
+    public static NBTTagCompound nbt;
 
 
 }

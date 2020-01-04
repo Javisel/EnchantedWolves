@@ -2,8 +2,8 @@ package com.javisel.enchantedwolves.common.enchantments;
 
 import com.javisel.enchantedwolves.EnchantedWolves;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class EnchantmentBase extends Enchantment {
 
@@ -12,14 +12,14 @@ public class EnchantmentBase extends Enchantment {
     Enchantment[] incompatibles;
 
 
-    public EnchantmentBase(String name, Rarity rarity, EnchantmentType type, EquipmentSlotType[] equipmentSlotTypes, int maxLevelIn) {
+    public EnchantmentBase(String name, Rarity rarity, EnumEnchantmentType type, EntityEquipmentSlot[] equipmentSlotTypes, int maxLevelIn) {
         super(rarity, type, equipmentSlotTypes);
         setRegistryName(EnchantedWolves.MODID, name);
         maxLevel = maxLevelIn;
 
     }
 
-    public EnchantmentBase(String name, Rarity p_i46731_1_, EnchantmentType p_i46731_2_, EquipmentSlotType[] p_i46731_3_, int maxLevelIn, Enchantment... incompatible) {
+    public EnchantmentBase(String name, Rarity p_i46731_1_, EnumEnchantmentType p_i46731_2_, EntityEquipmentSlot[] p_i46731_3_, int maxLevelIn, Enchantment... incompatible) {
         super(p_i46731_1_, p_i46731_2_, p_i46731_3_);
         setRegistryName(EnchantedWolves.MODID, name);
         maxLevel = maxLevelIn;
