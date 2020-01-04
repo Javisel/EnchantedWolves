@@ -2,7 +2,9 @@ package com.javisel.enchantedwolves.common.registration;
 
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.effect.Disarmed;
+
 import net.minecraft.potion.Effect;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

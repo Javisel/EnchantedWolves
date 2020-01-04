@@ -14,4 +14,6 @@ public class EnchantedWolvesItemGroup extends ItemGroup {
     public ItemStack createIcon() {
         return new ItemStack(ItemRegistration.diamond_collar);
     }
+
+
 }

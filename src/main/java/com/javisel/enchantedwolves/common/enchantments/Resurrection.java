@@ -3,7 +3,6 @@ package com.javisel.enchantedwolves.common.enchantments;
 import com.javisel.enchantedwolves.Config;
 import com.javisel.enchantedwolves.EnchantedWolves;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 
 public class Resurrection extends EnchantmentBase {
 

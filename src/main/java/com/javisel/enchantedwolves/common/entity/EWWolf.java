@@ -14,23 +14,7 @@ public class EWWolf extends WolfEntity {
     @Override
     public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
         super.setItemStackToSlot(slotIn, stack);
-        if (this.getHealth()>this.getMaxHealth()) {
-            this.setHealth(this.getMaxHealth());
-        }
-    }
-
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
-
-
-
-    @Override
-    public void livingTick() {
-        super.livingTick();
-
-       // this.getArmorInventoryList().forEach(e -> e.inventoryTick(world, this, 0, false));
 
     }
+
 }

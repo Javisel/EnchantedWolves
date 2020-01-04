@@ -129,9 +129,6 @@ public class EventHandler {
     public void leftClickCollarOff(LivingAttackEvent e) {
 
 
-            if (e.getEntityLiving().getHealth()>e.getEntityLiving().getMaxHealth()) {
-                e.getEntityLiving().setHealth(e.getEntityLiving().getMaxHealth());
-            }
 
         if (e.getEntityLiving().getType() == EntityType.WOLF && !e.getEntityLiving().getEntityWorld().isRemote) {
 
@@ -139,21 +136,6 @@ public class EventHandler {
             WolfEntity pupper = (WolfEntity) e.getEntityLiving();
 
 
-            if (e.getSource().getTrueSource() instanceof PlayerEntity) {
-
-                PlayerEntity playerEntity = (PlayerEntity) e.getSource().getTrueSource();
-
-                playerEntity.sendMessage(new StringTextComponent("Health: " + pupper.getHealth() + "/" + pupper.getMaxHealth()));
-                playerEntity.sendMessage(new StringTextComponent("Armor: " + pupper.getAttribute(SharedMonsterAttributes.ARMOR).getValue()));
-                playerEntity.sendMessage(new StringTextComponent("Attack Damage: " + pupper.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue()));
-                playerEntity.sendMessage(new StringTextComponent("Move Speed: " + pupper.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue()));
-
-
-
-                if (pupper.getHealth()>pupper.getMaxHealth()) {
-                    pupper.setHealth(pupper.getMaxHealth());
-                }
-            }
 
             if (pupper.isTamed() && pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar && e.getSource().getTrueSource() instanceof PlayerEntity) {
 
@@ -221,9 +203,6 @@ public class EventHandler {
 
         }
 
-        if (e.getEntity() != null && e.getSource().getTrueSource() != null) {
-
-        }
     }
 
 

@@ -1,7 +1,6 @@
 package com.javisel.enchantedwolves.common.item;
 
 import com.google.common.collect.Multimap;
-import com.javisel.enchantedwolves.Config;
 import com.javisel.enchantedwolves.EnchantedWolves;
 import com.javisel.enchantedwolves.common.registration.EnchantmentRegistration;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,19 +15,16 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.system.CallbackI;
-
-import java.util.Iterator;
 
 import static com.javisel.enchantedwolves.EnchantedWolves.*;
 
-public class WolfCollar extends ArmorItem {
+public class WolfCollar extends TieredItem {
 
 
     private String name;
 
-    public WolfCollar(String name,ArmorMaterial material) {
-        super(material,EquipmentSlotType.HEAD, new Properties().group(enchantedWolvesItemGroup));
+    public WolfCollar(String name,ItemTier tier) {
+        super(tier, new Properties().group(enchantedWolvesItemGroup));
         setRegistryName(EnchantedWolves.MODID, name);
         this.name = name;
 
