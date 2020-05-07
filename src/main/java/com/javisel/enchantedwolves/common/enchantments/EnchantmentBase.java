@@ -1,5 +1,6 @@
 package com.javisel.enchantedwolves.common.enchantments;
 
+
 import com.javisel.enchantedwolves.EnchantedWolves;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;

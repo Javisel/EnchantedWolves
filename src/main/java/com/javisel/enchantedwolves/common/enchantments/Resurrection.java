@@ -7,7 +7,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class Resurrection extends EnchantmentBase {
 
     public Resurrection() {
-        super("resurrection", Rarity.RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.resurrectionConfig.maxEnchantLevel.get());
+        super("resurrection", Rarity.VERY_RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.resurrectionConfig.maxEnchantLevel.get());
     }
 
     @Override

@@ -32,11 +32,11 @@ public class EnchantmentRegistration {
                 BUFFNESS = new EnchantmentBase("buffness", Enchantment.Rarity.COMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.buffnessConfig.maxEnchantLevel.get()),
 
                 TRAUMA = new EnchantmentBase("trauma", Enchantment.Rarity.COMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.traumaConfig.maxEnchantLevel.get()),
-                SWIFTNESS = new EnchantmentBase("swiftness", Enchantment.Rarity.UNCOMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.swiftnessConfig.maxEnchantLevel.get()),
-                LEECH_FANGS = new EnchantmentBase("leech_fangs", Enchantment.Rarity.RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.leechFangsConfig.maxEnchantLevel.get()),
+                SWIFTNESS = new EnchantmentBase("swiftness", Enchantment.Rarity.RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.swiftnessConfig.maxEnchantLevel.get()),
+                LEECH_FANGS = new EnchantmentBase("leech_fangs", Enchantment.Rarity.VERY_RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.leechFangsConfig.maxEnchantLevel.get()),
                 FROSTBITE = new EnchantmentBase("frostbite", Enchantment.Rarity.UNCOMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.frostbiteConfig.maxEnchantLevel.get()),
-                HELLHOUND = new EnchantmentBase("hellhound", Enchantment.Rarity.UNCOMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.hellhoundConfig.maxEnchantLevel.get()),
-                TOUGHNESS = new EnchantmentBase("toughness", Enchantment.Rarity.UNCOMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.toughnessConfig.maxEnchantLevel.get()),
+                HELLHOUND = new EnchantmentBase("hellhound", Enchantment.Rarity.RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.hellhoundConfig.maxEnchantLevel.get()),
+                TOUGHNESS = new EnchantmentBase("toughness", Enchantment.Rarity.RARE, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.toughnessConfig.maxEnchantLevel.get()),
                 CUSHION = new EnchantmentBase("cushion", Enchantment.Rarity.UNCOMMON, EnchantedWolves.COLLAR, new EquipmentSlotType[]{EquipmentSlotType.HEAD}, Config.cushionConfig.maxEnchantLevel.get()),
                 RESURRECTION = new Resurrection()
 

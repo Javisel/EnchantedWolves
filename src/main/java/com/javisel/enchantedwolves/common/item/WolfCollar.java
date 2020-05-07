@@ -18,13 +18,13 @@ import net.minecraft.util.ResourceLocation;
 
 import static com.javisel.enchantedwolves.EnchantedWolves.*;
 
-public class WolfCollar extends TieredItem {
+public class WolfCollar extends ArmorItem {
 
 
     private String name;
 
-    public WolfCollar(String name,ItemTier tier) {
-        super(tier, new Properties().group(enchantedWolvesItemGroup));
+    public WolfCollar(String name,IArmorMaterial material) {
+        super(material, EquipmentSlotType.HEAD,new Item.Properties().group(enchantedWolvesItemGroup).maxDamage(material.getDurability(EquipmentSlotType.HEAD)+100));
         setRegistryName(EnchantedWolves.MODID, name);
         this.name = name;
 

@@ -24,18 +24,17 @@ public class EWCollarLayer extends LayerRenderer<WolfEntity, WolfModel<WolfEntit
     }
 
     @Override
-    public void func_225628_a_(MatrixStack p_225628_1_, IRenderTypeBuffer p_225628_2_, int p_225628_3_, WolfEntity pupper, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
-
+    public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, WolfEntity pupper, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (pupper.isTamed() && !pupper.isInvisible()) {
 
             if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof WolfCollar) {
                 WolfCollar collar = (WolfCollar) pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem();
 
-                func_229141_a_(this.getEntityModel(), collar.collarLocation(), p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
+                renderCutoutModel(this.getEntityModel(), collar.collarLocation(), matrixStackIn, bufferIn, packedLightIn, pupper, 1, 1, 1);
                 if (pupper.getItemStackFromSlot(EquipmentSlotType.HEAD).hasEffect()) {
 
 
-                    func_229141_a_(this.getEntityModel(), ENCHANTED, p_225628_1_, p_225628_2_, p_225628_3_, pupper, 1, 1, 1);
+                    renderCutoutModel(this.getEntityModel(), ENCHANTED, matrixStackIn, bufferIn, packedLightIn, pupper, 1, 1, 1);
 
                 }
 
@@ -43,4 +42,6 @@ public class EWCollarLayer extends LayerRenderer<WolfEntity, WolfModel<WolfEntit
             }
         }
     }
+
+
 }

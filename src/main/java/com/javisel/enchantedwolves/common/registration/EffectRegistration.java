@@ -14,14 +14,14 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EffectRegistration {
 
-    public static Effect DISARMED = null;
 
     @SubscribeEvent
     public static void registerEffect(final RegistryEvent.Register<Effect> event) {
 
         event.getRegistry().registerAll(
 
-                DISARMED = new Disarmed()
+
+
         );
 
 

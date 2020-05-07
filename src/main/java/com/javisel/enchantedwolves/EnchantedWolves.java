@@ -1,9 +1,6 @@
 package com.javisel.enchantedwolves;
 
 import com.javisel.enchantedwolves.client.EWCollarLayer;
-import com.javisel.enchantedwolves.common.capabilities.IWolfCapabilities;
-import com.javisel.enchantedwolves.common.capabilities.WolfCapabilities;
-import com.javisel.enchantedwolves.common.capabilities.WolfCapabilityStorage;
 import com.javisel.enchantedwolves.common.item.WolfCollar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -41,7 +38,6 @@ import java.util.UUID;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("enchantedwolves")
 public class EnchantedWolves {
-    public static final UUID MAX_HEALTH_MODDIFIER = UUID.fromString("c46e576c-675e-4c02-a7f3-41f4b51681d2");
     public static final UUID MOVEMENT_SPEED_MODDIFIER = UUID.fromString("09432089-1a0d-49d2-be39-39a552153dd5");
     public static final UUID ARMOR_MODIFIER = UUID.fromString("cd2836f6-ec49-49be-96fe-a043fab5be84");
     public static final UUID ARMOR_TOUGHNESS_MODIFIER = UUID.fromString("339acf3d-7d17-42d5-9aa8-972e09fe6590");
@@ -50,7 +46,7 @@ public class EnchantedWolves {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static EnchantedWolvesItemGroup enchantedWolvesItemGroup = new EnchantedWolvesItemGroup();
-    public static EnchantmentType COLLAR = EnchantmentType.create("collar", (item) -> (item instanceof WolfCollar));
+    public static final EnchantmentType COLLAR = EnchantmentType.create("collar", (item) -> (item instanceof WolfCollar));
 
     public EnchantedWolves() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigSetup.SERVER, "enchantedwolves.toml");
@@ -132,7 +128,6 @@ public class EnchantedWolves {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        CapabilityManager.INSTANCE.register(IWolfCapabilities.class, new WolfCapabilityStorage(), WolfCapabilities::new);
 
 
 
